@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
+import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
 
@@ -29,11 +28,23 @@ class PostForm extends Component {
             date: '',
             type: '',
             description: '',
-            transaction_amount: 0,
-            previous_balance: 12,
-            current_balance: 32
+            transaction_amount: '',
+            previous_balance: '',
+            current_balance: ''
         }
         
+    }
+    
+    componentDidMount() {
+        axios.get('http://localhost:3001/posts/')
+            .then((response) => {
+              console.log(response.data)
+                this.setState({
+                    current_balance: response.data.pop().current_balance
+                });
+            }).catch((error) => {
+                console.error(error);
+        });
     }
 
     changeHandler = (e) => {
@@ -41,31 +52,33 @@ class PostForm extends Component {
         this.setState({date: timeStamp});
     }
 
-    addAction =(event)=> {
-        let x = Number(this.state.previous_balance) + Number(this.state.transaction_amount);
-        this.setState({current_balance: x });
+    updateStateHandler = (e) => {
+        let x = Number(this.state.current_balance) + Number(this.state.transaction_amount);
+        let y = Number(this.state.current_balance);
+        this.setState({ current_balance: x });
+        this.setState({ previous_balance: y });
+    }
 
-        console.log(this.state.current_balance);
+    submitHandler = (e) => {
 
-    }    
-
-    submitHandler = e => {
         e.preventDefault();
-        console.log(this.state)
+       
         axios.post('http://localhost:3001/posts', this.state)
         .then(response => {
             console.log(response)
         }).catch(error => {
             console.log(error)
         });
+        
+        window.location.reload(false);
     }
     
     render() {
-        const { type, description, transaction_amount } = this.state;
+        const { type, description, transaction_amount, current_balance } = this.state;
         const { classes } = this.props;
         return (
             <div>
-                <form className={classes.root} noValidate autoComplete="off" onSubmit={this.addAction, this.submitHandler}>
+                <form className={classes.root} noValidate autoComplete="off" onSubmit={this.submitHandler}>
                     <TextField id="standard-basic" label="Type"
                     type="text" 
                     name="type" 
@@ -81,13 +94,13 @@ class PostForm extends Component {
                     name="transaction_amount" 
                     value={transaction_amount}
                     onChange={this.changeHandler} />
-                    <Button variant="contained" color="primary" type="submit">
+                    <Button variant="contained" color="primary" type="submit" onClick={this.updateStateHandler}>
                         Submit
-                    </Button>
-                    <Button variant="contained" color="primary" type="submit" onClick={this.addAction}>
-                        Add
-                    </Button>
-                </form>
+                    </Button>         
+                </form>                    
+                    <Typography color="textSecondary" >
+                        $ {current_balance}
+                    </Typography>
 
 {/*                 <form onSubmit={this.submitHandler}>
                     <div>

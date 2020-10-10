@@ -10,17 +10,7 @@ router.get('/', async (req, res) => {
    } catch (err) {
        res.json({message:err});
    }
-}); 
-
-// Getting latest post
-router.get('/latest', async (req, res) => {
-    try {
-        const posts = await Post.find().sort({amount: -1});
-        res.json(posts);
-    } catch (err) {
-        res.json({message:err});
-    }
- }); 
+});
 
 // Get specific post
 router.get('/:postId', async (req, res) => {

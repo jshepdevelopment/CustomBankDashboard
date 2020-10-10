@@ -20,7 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
+import Balance from './Balance';
 import Transactions from './Transactions';
 
 function Copyright() {
@@ -28,7 +28,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Kids Bank–Benjamins Bank
+        My Bank
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -143,7 +143,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Kids Bank
+            My Bank
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -182,7 +182,7 @@ export default function Dashboard() {
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                <Balance />
               </Paper>
             </Grid>
             {/* Recent Transactions */}

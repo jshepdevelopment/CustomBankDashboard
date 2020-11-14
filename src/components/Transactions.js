@@ -23,21 +23,32 @@ export default class Transactions extends Component {
       .then(res => {
         const data = res.data
         console.log(data)
-        const transactions = data.map(u =>
+        const transactions = 
           <div>
             <React.Fragment>
-                  <Table size="small">
+              <Title>Recent Transactions</Title>
+                  <Table >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="left">Date</TableCell>
+                        <TableCell align="left">Transaction Type</TableCell>
+                        <TableCell align="left">Description</TableCell>
+                        <TableCell align="left">Amount</TableCell>
+                      </TableRow>
+                    </TableHead>
                     <TableBody>
+                      {data.map((u) => (
                         <TableRow key={u.id}>
-                          <TableCell align="right">{u.date}</TableCell>
-                          <TableCell align="right">{u.type}</TableCell>
-                          <TableCell align="right">{u.description}</TableCell>
-                          <TableCell align="right">${u.transaction_amount}</TableCell>
+                          <TableCell align="left">{u.date}</TableCell>
+                          <TableCell align="left">{u.type}</TableCell>
+                          <TableCell align="left">{u.description}</TableCell>
+                          <TableCell align="left">${u.transaction_amount}</TableCell>
                         </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
               </React.Fragment>
-          </div>)
+          </div>
         this.setState({transactions})
       })
       .catch((error) => {
@@ -50,21 +61,6 @@ export default class Transactions extends Component {
    render() {
      return (
        <div>
-         <React.Fragment>
-           <Title>Recent Transactions</Title>
-         <Table size="small">
-        <TableBody>
-          <TableHead>
-          <TableRow>
-            <TableCell align="right">Date</TableCell>
-            <TableCell align="right">Type</TableCell>
-            <TableCell align="right">Description</TableCell>
-            <TableCell align="right">Amount</TableCell>
-          </TableRow>
-        </TableHead>
-        </TableBody>
-        </Table>
-        </React.Fragment>
           {this.state.transactions}
        </div>
      )

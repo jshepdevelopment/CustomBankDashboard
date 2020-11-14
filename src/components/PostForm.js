@@ -97,28 +97,7 @@ class PostForm extends Component {
                     <Button variant="contained" color="primary" type="submit" onClick={this.updateStateHandler}>
                         Submit
                     </Button>         
-                </form>                    
-                    <Typography color="textSecondary" >
-                        $ {current_balance}
-                    </Typography>
-
-{/*                 <form onSubmit={this.submitHandler}>
-                    <div>
-                        <input 
-                        type="text" 
-                        name="title" 
-                        value={title}
-                        onChange={this.changeHandler} />
-                    </div>
-                    <div>
-                        <input 
-                        type="text" 
-                        name="description" 
-                        value={description}
-                        onChange={this.changeHandler} />
-                    </div>
-                    <button type="submit">Submit</button>
-                </form> */}
+                </form>
             </div>
         )
     }

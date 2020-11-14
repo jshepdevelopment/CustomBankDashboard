@@ -28,7 +28,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        My Bank
+        Benjamin's Bank
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -143,7 +143,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            My Bank
+            Benjamin's Bank
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

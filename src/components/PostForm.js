@@ -65,7 +65,7 @@ class PostForm extends Component {
        
         axios.post('http://localhost:3001/posts', this.state)
         .then(response => {
-            console.log(response)
+            /* console.log(response) */
         }).catch(error => {
             console.log(error)
         });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,61 +7,66 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
+import axios from 'axios';
 
-// Generate Transaction Data
-function createData(id, date, type, description, amount) {
-  return { id, date, type, description, amount };
-}
+export default class Transactions extends Component {
+  constructor(props) {
+    super(props);
+      this.state = {
+        transactions: []
+      };
+   }
 
-const rows = [
-  createData(0, 'Sept 30, 2020', 'Deposit', 'Behavior chart reward', 7.00),
-  createData(0, 'Sept 9, 2020', 'Deposit', 'Behavior chart reward', 3.00),
-  createData(0, 'Aug 12, 2020', 'Withdrawl', 'Lego Purchase', -11.23),
-  createData(0, 'July 30, 2020', 'Deposit', 'Behavior chart reward', 12.00),
-  createData(0, 'July 2, 2020', 'Deposit', 'Behavior chart reward', 5.00),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-const useStyles = makeStyles((theme) => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}));
-
-export default function Transactions() {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      <Title>Recent Transactions</Title>
-      <Table size="small">
-        <TableHead>
+   getTransactionsData() {
+     axios
+      .get('http://localhost:3001/posts/', {})
+      .then(res => {
+        const data = res.data
+        console.log(data)
+        const transactions = data.map(u =>
+          <div>
+            <React.Fragment>
+                  <Table size="small">
+                    <TableBody>
+                        <TableRow key={u.id}>
+                          <TableCell align="right">{u.date}</TableCell>
+                          <TableCell align="right">{u.type}</TableCell>
+                          <TableCell align="right">{u.description}</TableCell>
+                          <TableCell align="right">${u.transaction_amount}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                  </Table>
+              </React.Fragment>
+          </div>)
+        this.setState({transactions})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+   }
+   componentDidMount(){
+     this.getTransactionsData()
+   }
+   render() {
+     return (
+       <div>
+         <React.Fragment>
+           <Title>Recent Transactions</Title>
+         <Table size="small">
+        <TableBody>
+          <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Description</TableCell>
+            <TableCell align="right">Date</TableCell>
+            <TableCell align="right">Type</TableCell>
+            <TableCell align="right">Description</TableCell>
             <TableCell align="right">Amount</TableCell>
-            
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.type}</TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
-            </TableRow>
-          ))}
         </TableBody>
-      </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more transactions
-        </Link>
-      </div>
-    </React.Fragment>
-  );
+        </Table>
+        </React.Fragment>
+          {this.state.transactions}
+       </div>
+     )
+   }
 }

@@ -27,7 +27,7 @@ export default class Balance extends Component {
   componentDidMount() {
     axios.get('http://localhost:3001/posts/')
         .then((response) => {
-          console.log(response.data)
+/*           console.log(response.data) */
             this.setState({
                 current_balance:response.data.pop().current_balance
             });
